@@ -5,7 +5,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const path = require('path');
+const path = require("path");
 
 app.use(cors());
 app.use(express.json());
@@ -34,7 +34,6 @@ app.use("/api/message", messageRoute);
 // const ChatGptRoute = require("./routes/ChatGptRoute.routes")
 // app.use("/api/chatgpt" , ChatGptRoute);
 
-
 // ================Deploye Code ===================
 // const __dirname1 = path.resolve();
 
@@ -51,7 +50,6 @@ app.use("/api/message", messageRoute);
 // }
 
 // ================Deploye Code ===================
-
 
 const { notFound, errorhandle } = require("./middlewares/errorMiddlewear");
 app.use(notFound);
@@ -75,7 +73,7 @@ io.on("connection", (socket) => {
   socket.on("setUp", (userData) => {
     if (userData && userData._id) {
       socket.join(userData._id);
-    //   console.log("User joined room: ", userData._id);
+      //   console.log("User joined room: ", userData._id);
       socket.emit("connected");
     } else {
       console.error("No user data received");
@@ -87,31 +85,26 @@ io.on("connection", (socket) => {
     console.log("user join party", room);
   });
 
-  socket.on("typing",(room) => socket.in(room).emit("typing"));
+  socket.on("typing", (room) => socket.in(room).emit("typing"));
   socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
-
-
-
-  socket.on("new message", (newMessageReceived)=>{
+  socket.on("new message", (newMessageReceived) => {
     const chat = newMessageReceived.chat;
-    if(!chat.users) return console.log("chat.users not found");
+    if (!chat.users) return console.log("chat.users not found");
 
-    chat.users.forEach(user => {
-        if(user._id == newMessageReceived.sender._id) return ;
+    chat.users.forEach((user) => {
+      if (user._id == newMessageReceived.sender._id) return;
 
-        socket.in(user._id).emit("Message Received" , newMessageReceived)
-    })
-
-  })
-
+      socket.in(user._id).emit("Message Received", newMessageReceived);
+    });
+  });
 
   socket.off("setUp", () => {
     console.log("User disconnected from Socket.IO");
     socket.leave(userData._id);
   });
 
-    socket.on("disconnect", () => {
-      console.log("User disconnected from Socket.IO");
-    });
+  socket.on("disconnect", () => {
+    console.log("User disconnected from Socket.IO");
+  });
 });
