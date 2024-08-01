@@ -7,7 +7,14 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 
-app.use(cors());
+const corsOptions = {
+  origin: ["https://tic-tac-talk.vercel.app/"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
