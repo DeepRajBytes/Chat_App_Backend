@@ -9,11 +9,10 @@ const path = require("path");
 
 const corsOptions = {
   origin: "https://tic-tac-talk.vercel.app",
-  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 
-app.use(cors(corsOptions));
+app.use(cors({origin: "https://tic-tac-talk.vercel.app",}));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
