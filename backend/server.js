@@ -7,12 +7,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 
-const corsOptions = {
-  origin: "https://tic-tac-talk.vercel.app",
-};
 
 
-app.use(cors({origin: "https://tic-tac-talk.vercel.app",}));
+app.use(cors({ credentials: true, origin: "https://tic-tac-talk.vercel.app" }));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
