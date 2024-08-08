@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 
 const corsOptions = {
-  origin: ["https://tic-tac-talk.vercel.app/"],
+  origin: "https://tic-tac-talk.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
